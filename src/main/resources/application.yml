@@ -1,0 +1,24 @@
+# spring.cloud.config.uri = http://localhost:8888
+spring:
+  config:
+    import: configserver:http://localhost:8888
+  application:
+    name: vehicle
+  jpa:
+    hibernate:
+      ddl-auto: update
+  profiles:
+    active: "@profileActive@"
+
+
+# curl -X POST http://localhost:8091/service/vehicle  -H 'Content-Type: application/json' --data '{"make":"huidai", "model":"i10", "engineType":"petrol", "isSedan":1}'j                                          ─╯
+# {"id":1,"make":"huidai","model":"i10","engineType":"petrol","isSedan":true,"sedan":true}
+#
+#  curl -X POST http://localhost:8091/service/vehicle  -H 'Content-Type: application/json' --data '{"make":"honda", "model":"city-zlx", "engineType":"petrol", "isSedan":1}'                                       ─╯
+# {"id":2,"make":"honda","model":"city-zlx","engineType":"petrol","isSedan":true,"sedan":true}
+#
+# curl -X GET http://localhost:8091/service/vehicle\?id\=2                                                                                                                                                        ─╯
+# {"id":2,"make":"honda","model":"city-zlx","engineType":"petrol","isSedan":true,"sedan":true}%
+#
+# curl -X GET http://localhost:8091/service/vehicles                                                                                                                                                              ─╯
+# [{"id":1,"make":"huidai","model":"i10","engineType":"petrol","isSedan":true,"sedan":true},{"id":2,"make":"honda","model":"city-zlx","engineType":"petrol","isSedan":true,"sedan":true}]
